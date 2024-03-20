@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Todo List</title>
+    <link rel="stylesheet" href="./static/style.css">
+</head>
+
+<body>
+    <h1>Welcome to todo List</h1>
+    <div>
+    <form class="container" action="{{ url_for('home') }}" method="POST">
+        <input type="text" placeholder="enter your task"  id="input-todo" name="todo_name">
+        
+        <input
+        type = "text" name = "description" id = "description" placeholder = "enter your description related in your task" gap = 300px/>
+        <button>save</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+     <ul>
+     {% for message in messages %}
+       <li>{{ message }}</li>
+     {% endfor %}
+     </ul>
+    {% endif %}
+   {% endwith %}
+    </div>
+
+
+    <h2>your tasks</h2>
+    
+    <div class="todo-container">
+        {% for item in items %}
+        <div class="todo">
+            <p>{{ item.name }}</p>
+            <div class="actions">
+                <form action="{{ url_for('checked_todo', todo_id=item.id) }}" method="POST">
+                    <input type="checkbox" name="match" value="matchwithpairs" checked> 
+                </form>
+                <form action="{{ url_for('delete_todo', todo_id=item.id) }}" method="POST">
+                    <button>Delete</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
